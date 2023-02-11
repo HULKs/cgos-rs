@@ -14,6 +14,7 @@ use crate::{
         CGOS_BOARD_CLASS_CPU, CGOS_BOARD_CLASS_IO, CGOS_BOARD_CLASS_VGA,
     },
     fan::Fan,
+    storage_area::{StorageArea, StorageAreaType},
     temperature::Temperature,
 };
 
@@ -106,6 +107,21 @@ impl<'library> Board<'library> {
 
     pub fn get_fan(&'library self, index: usize) -> Fan<'library> {
         Fan::new(self.handle, index)
+    }
+
+    pub fn get_number_of_storage_areas(&self, type_: StorageAreaType) -> usize {
+        StorageArea::amount(self.handle, type_)
+    }
+
+    pub fn get_storage_area_from_index(&'library self, index: usize) -> StorageArea<'library> {
+        StorageArea::from_index(self.handle, index)
+    }
+
+    pub fn get_storage_area_from_type(
+        &'library self,
+        type_: StorageAreaType,
+    ) -> StorageArea<'library> {
+        StorageArea::from_type(self.handle, type_)
     }
 }
 

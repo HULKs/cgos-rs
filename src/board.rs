@@ -14,6 +14,7 @@ use crate::{
         CGOS_BOARD_CLASS_CPU, CGOS_BOARD_CLASS_IO, CGOS_BOARD_CLASS_VGA,
     },
     fan::Fan,
+    i2c::{I2c, I2cResult},
     storage_area::{StorageArea, StorageAreaType},
     temperature::Temperature,
 };
@@ -122,6 +123,14 @@ impl<'library> Board<'library> {
         type_: StorageAreaType,
     ) -> StorageArea<'library> {
         StorageArea::from_type(self.handle, type_)
+    }
+
+    pub fn get_number_of_i2c(&'library self) -> usize {
+        I2c::amount(self.handle)
+    }
+
+    pub fn get_i2c(&'library self, index: usize) -> I2cResult<I2c<'library>> {
+        I2c::new(self.handle, index)
     }
 }
 
